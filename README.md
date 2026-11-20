@@ -17,27 +17,6 @@ Add this to your `Cargo.toml`:
 oka = "0.1.0"
 ```
 
-## Configuration
-
-Below you can find instruction on how to configure many logging options availble
-on vetis.
-
-### stdout
-
-#### Using API
-
-```rust,ignore
-
-```
-
-#### vetis.yaml
-
-There's no plans to provide this kind of configuration method.
-
-#### Configuration Options
-
-- **log_level**: Log level: TRACE, WARN, DEBUG, INFO, ERROR and FATAL
-
 ### Runtime Features
 
 Choose the appropriate runtime feature for your project:
