@@ -2,7 +2,7 @@
 
 [![Crates.io downloads](https://img.shields.io/crates/d/oka)](https://crates.io/crates/oka) [![crates.io](https://img.shields.io/crates/v/oka?style=flat-square)](https://crates.io/crates/oka) [![Build Status](https://github.com/ararog/oka/actions/workflows/rust.yml/badge.svg?event=push)](https://github.com/ararog/oka/actions/workflows/rust.yml) ![Crates.io MSRV](https://img.shields.io/crates/msrv/oka) [![Documentation](https://docs.rs/oka/badge.svg)](https://docs.rs/oka/latest/oka) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ararog/oka/blob/main/LICENSE.md)  [![codecov](https://codecov.io/gh/ararog/oka/graph/badge.svg?token=T0HSBAPVSI)](https://codecov.io/gh/ararog/oka)
 
-oka adds webtransport support to your vetis server!
+oka is a L1 and L2 caching library for rust async applications.
 
 ## Features
 
@@ -42,7 +42,8 @@ There's no plans to provide this kind of configuration method.
 
 Choose the appropriate runtime feature for your project:
 
-- `runtime-tokio` (default): Use with Tokio runtime
+- `tokio` (default): Use with Tokio runtime
+- `smol` (default): Use with Tokio runtime
 
 ## License
 
