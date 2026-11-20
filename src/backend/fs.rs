@@ -33,7 +33,8 @@ impl FileSystemBackend {
         let mut hasher = Sha256::new();
         hasher.update(key.as_bytes());
         let hash = hex::encode(hasher.finalize());
-        self.base_dir.join(format!("{hash}.json"))
+        self.base_dir
+            .join(format!("{hash}.json"))
     }
 
     fn now_unix() -> u64 {

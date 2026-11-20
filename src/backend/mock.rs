@@ -18,7 +18,10 @@ unsafe impl Sync for MockBackend {}
 impl L2CacheBackend for MockBackend {
     fn get<'a>(&'a self, key: &'a str) -> CacheFutureResult<'a, Option<String>> {
         let future = async move {
-            let read_guard = self.store.read().await;
+            let read_guard = self
+                .store
+                .read()
+                .await;
             if let Some((val, expires_at)) = read_guard.get(key) {
                 if Instant::now() < *expires_at {
                     return Ok(Some(val.clone()));
@@ -27,7 +30,10 @@ impl L2CacheBackend for MockBackend {
             drop(read_guard);
 
             // Clean up expired entry
-            self.store.write().await.remove(key);
+            self.store
+                .write()
+                .await
+                .remove(key);
             Ok(None)
         };
 
@@ -49,7 +55,10 @@ impl L2CacheBackend for MockBackend {
 
     fn delete<'a>(&'a self, key: &'a str) -> CacheFutureResult<'a, ()> {
         let future = async move {
-            self.store.write().await.remove(key);
+            self.store
+                .write()
+                .await
+                .remove(key);
             Ok(())
         };
 

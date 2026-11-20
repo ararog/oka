@@ -8,6 +8,8 @@ use thiserror::Error;
 
 /// Backend module
 pub mod backend;
+#[cfg(test)]
+mod tests;
 
 /// Type alias for result
 pub type CacheResult<T> = Result<T, CacheError>;
@@ -79,15 +81,25 @@ where
     /// Retrieve a value from the cache
     pub fn get<'a>(&'a self, key: &'a str) -> CacheFutureResult<'a, Option<V>> {
         let future = async move {
-            if let Some(val) = self.l1.get(key).await {
+            if let Some(val) = self
+                .l1
+                .get(key)
+                .await
+            {
                 return Ok(Some(val));
             }
 
-            if let Some(raw) = self.l2.get(key).await? {
+            if let Some(raw) = self
+                .l2
+                .get(key)
+                .await?
+            {
                 let val: V = serde_json::from_str(&raw)
                     .map_err(|e| CacheError::SerializationError(e.to_string()))?;
                 // Backfill L1
-                self.l1.insert(key.to_string(), val.clone()).await;
+                self.l1
+                    .insert(key.to_string(), val.clone())
+                    .await;
                 return Ok(Some(val));
             }
 
@@ -102,8 +114,12 @@ where
         let future = async move {
             let raw = serde_json::to_string(&value)
                 .map_err(|e| CacheError::SerializationError(e.to_string()))?;
-            self.l2.set(key, raw, self.l2_ttl).await?;
-            self.l1.insert(key.to_string(), value).await;
+            self.l2
+                .set(key, raw, self.l2_ttl)
+                .await?;
+            self.l1
+                .insert(key.to_string(), value)
+                .await;
             Ok(())
         };
 
@@ -113,8 +129,12 @@ where
     /// Invalidate an entry
     pub fn invalidate<'a>(&'a self, key: &'a str) -> CacheFutureResult<'a, ()> {
         let future = async move {
-            self.l1.invalidate(key).await;
-            self.l2.delete(key).await?;
+            self.l1
+                .invalidate(key)
+                .await;
+            self.l2
+                .delete(key)
+                .await?;
             Ok(())
         };
 
