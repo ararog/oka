@@ -18,9 +18,13 @@ unexpected_cfgs = { level = "warn", check-cfg = ['cfg(tarpaulin)'] }
 all-features = true
 
 [features]
-default = ["tokio"]
+default = ["mock", "tokio", "valkey"]
 tokio = ["dep:tokio", "redis/tokio-comp"]
 smol = []
+
+fs = []
+mock = []
+valkey = ["dep:redis"]
 
 [dependencies]
 hex = "0.4"
